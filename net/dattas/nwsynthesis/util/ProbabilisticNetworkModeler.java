@@ -71,30 +71,31 @@ public class ProbabilisticNetworkModeler {
 			int tempWidth = (new Double(java.lang.Math.pow (branch, i)).intValue());
 			levelWidths.add(new Integer(tempWidth));
 		}
-		//System.out.println(levelWidths);
+	
+		//System.out.println("levelwidth"+levelWidths);
 		int noOfLevels = levelWidths.size();
 		int lastVertex = 1;
 	
 		for(int i=0; i<noOfLevels; i++)
 		{
 			int noOfVerticesAtThisLevel = levelWidths.get(i).intValue();
-			 
+			// System.out.println("noofverticesatthis level"+noOfVerticesAtThisLevel);
 			Vector<Integer> levelVertices = new Vector<Integer>();
 			for(int j=1; j<= noOfVerticesAtThisLevel; j++)
 			{
 				int addedVertex = lastVertex + 1;
-			//	System.out.println("addedVertex " + addedVertex);
+				//System.out.println("addedVertex " + addedVertex);
 				levelVertices.add(new Integer(addedVertex));
 				
 				
 				
 				int lastVertexAtThisLevel = levelVertices.lastElement().intValue();	
-			//	System.out.println("lastVertexAtThisLevel " + lastVertexAtThisLevel);
+				//System.out.println("lastVertexAtThisLevel " + lastVertexAtThisLevel);
 				lastVertex = lastVertexAtThisLevel;
 				
 			}
 			levels.add(levelVertices);
-		//	System.out.println("Vertices at this level " + levelVertices);
+			//System.out.println("Vertices at this level " + levelVertices);
 		}
 		
 		
@@ -105,7 +106,8 @@ public class ProbabilisticNetworkModeler {
 	// 2. Pass parameter q = probability of peers affiliating, at parameter l = level of peers; 
 	// check for extent of diameter shrinkage
 	
-	public Vector<AffiliationDataBean> generateAffiliations(Vector<Vector<Integer>> levels, int branch, int height, double p, int peerLevel, double q, double randomAffiliationProbability, Vector<String> vertexIDs)
+	public Vector<AffiliationDataBean> generateAffiliations(Vector<Vector<Integer>> levels, int branch, int height, double p, 
+			int peerLevel, double q, double randomAffiliationProbability, Vector<String> vertexIDs)
 	{
 		Vector<AffiliationDataBean> affiliations = new Vector<AffiliationDataBean>();
 		Vector <Hashtable <Integer,Vector<Integer>>> leafNodesForParents = new Vector<Hashtable<Integer,Vector<Integer>>>();
@@ -120,13 +122,13 @@ public class ProbabilisticNetworkModeler {
 			int currentLevelNo = i;
 			int nextLevelNo = i+1;
 			
-		//	System.out.println("\nThis is level no: " + currentLevelNo);
+			//System.out.println("\nThis is level no: " + currentLevelNo);
 			
 			
 			Vector<Integer> currentLevel = levels.get(currentLevelNo);
-		//	System.out.println("currentLevel " + currentLevel);
+			//System.out.println("currentLevel " + currentLevel);
 			Vector<Integer> nextLevel = levels.get(nextLevelNo);
-		//	System.out.println("nextLevel " + nextLevel + "\n");
+			//System.out.println("nextLevel " + nextLevel + "\n");
 			
 			int noOfVerticesInCurrentLevel = currentLevel.size();
 		
@@ -134,7 +136,7 @@ public class ProbabilisticNetworkModeler {
 			int currentAffiliationSource = 0;
 			int currentAffliationDestination = 0;
 			
-		//	System.out.println("*Edges");
+			//System.out.println("*Edges");
 			int counter = 0;
 			for(int j=0; j<noOfVerticesInCurrentLevel; j++)
 			{
@@ -156,7 +158,7 @@ public class ProbabilisticNetworkModeler {
 							leavesForAParent.add(currentAffliationDestination);
 						}
 					
-				//	System.out.println("*Edge");
+					//System.out.println("*Edge");
 					//System.out.println(currentAffiliationSource + " " + currentAffliationDestination);
 					AffiliationDataBean affiliationDataBean = new AffiliationDataBean();
 					affiliationDataBean.setEntitySource(currentAffiliationSource);
@@ -176,6 +178,7 @@ public class ProbabilisticNetworkModeler {
 					Hashtable<Integer, Vector<Integer>> parentLeaves = new Hashtable<Integer, Vector<Integer>>();
 					parentLeaves.put(currentAffiliationSource,leavesForAParent);
 					leafNodesForParents.add(parentLeaves);
+					//System.out.println("leafnodesforparents"+leafNodesForParents);
 				}
 				
 			}
@@ -183,7 +186,7 @@ public class ProbabilisticNetworkModeler {
 			
 			
 		}
-		//System.out.println("leafNodesForParents " + leafNodesForParents);
+		//System.out.println("Final leafNodesForParents " + leafNodesForParents);
 		// End: Generate the usual tree affiliations and record leaves under each parent
 		
 		
@@ -207,6 +210,7 @@ public class ProbabilisticNetworkModeler {
 		for(int i=0; i<leafNodesForParents.size(); i++)
 		{
 			Hashtable<Integer, Vector<Integer>> temp = leafNodesForParents.elementAt(i);
+		//	System.out.println("manish");
 			//System.out.println(temp);
 			Vector<Integer> leaves = new Vector<Integer>();
 			Enumeration<Vector<Integer>> enumLeaves = temp.elements();
@@ -242,7 +246,7 @@ public class ProbabilisticNetworkModeler {
 					}
 		}
 		//System.out.println("No of new edges are: " + newEdgeIDsBetnLeaves.size());
-	//	System.out.println("New edges between leaves: " + newEdgeIDsBetnLeaves);
+		//System.out.println("New edges between leaves: " + newEdgeIDsBetnLeaves);
 		affiliations.addAll(leafAffiliations);
 		
 		// End: Generate affiliations due to connections between leaf nodes under same parent
@@ -260,13 +264,13 @@ public class ProbabilisticNetworkModeler {
 		if(peerLevel < height)
 		{
 			Vector<Integer> verticesAtThisLevel = levels.elementAt(peerLevel);
-		//	System.out.println("Vertices at this peer level: " + verticesAtThisLevel);
+			//System.out.println("Vertices at this peer level: " + verticesAtThisLevel);
 			int noOfVerticesAtThisLevel = verticesAtThisLevel.size();
 			double maxNoOfLinksBetnVerticesAtThisLevel = Binomial.choose2(noOfVerticesAtThisLevel);
 			double actualNoOfLinksBetnVerticesAtThisLevel = Math.rint(q*maxNoOfLinksBetnVerticesAtThisLevel);
 			
-		//	System.out.println("Max no of links betn vertices at same level: " + maxNoOfLinksBetnVerticesAtThisLevel);
-		//	System.out.println("Actual no of links betn vertices at same level: " + actualNoOfLinksBetnVerticesAtThisLevel);
+			//System.out.println("Max no of links betn vertices at same level: " + maxNoOfLinksBetnVerticesAtThisLevel);
+			//System.out.println("Actual no of links betn vertices at same level: " + actualNoOfLinksBetnVerticesAtThisLevel);
 			
 			int counter = (new Double(actualNoOfLinksBetnVerticesAtThisLevel)).intValue();
 			while(counter>0)
@@ -293,7 +297,7 @@ public class ProbabilisticNetworkModeler {
 					
 					}
 			}
-			
+			//System.out.println("newedfeidbetweenlevels"+newEdgeIDsBetweenLevels);
 			
 		}
 		else
@@ -302,7 +306,7 @@ public class ProbabilisticNetworkModeler {
 		}
 		//System.out.println("No of new edges are: " + newEdgeIDsBetnLevels.size());
 		//System.out.println("New edges: " + newEdgeIDsBetnLevels);
-	//	System.out.println("New edges between peers at same level: " + newEdgeIDsBetweenLevels);
+	   // System.out.println("New edges between peers at same level: " + newEdgeIDsBetweenLevels);
 		affiliations.addAll(levelAffiliations);
 		
 		// End: Generate affiliations due to connections between peers at same level
@@ -312,8 +316,8 @@ public class ProbabilisticNetworkModeler {
 		//double randomAffiliationProbability = randAffProb;
 		int howManyAffiliationsBeforeRandom = affiliations.size();
 		double howManyRandomAffiliationsToAdd = randomAffiliationProbability * howManyAffiliationsBeforeRandom;
-	//	System.out.println("howManyAffiliationsBeforeRandom: " + howManyAffiliationsBeforeRandom);
-	//	System.out.println("howManyRandomAffiliationsToAdd: " + howManyRandomAffiliationsToAdd);
+		//System.out.println("howManyAffiliationsBeforeRandom: " + howManyAffiliationsBeforeRandom);
+		//System.out.println("howManyRandomAffiliationsToAdd: " + howManyRandomAffiliationsToAdd);
 		
 		Vector<AffiliationDataBean> randomAffilations = new Vector<AffiliationDataBean>();
 		
@@ -325,11 +329,12 @@ public class ProbabilisticNetworkModeler {
 			int dest = affiliationDataBean.getEntityDestination();
 			String affiliationAlias = source + "_" + dest;
 			affiliationAliases.add(affiliationAlias);
+			//System.out.println("afflication"+affiliationAliases);
 		}
 		
 		
 		int counter = (new Double(Math.rint(howManyRandomAffiliationsToAdd)).intValue());
-	//	System.out.println("counter: " + counter);
+		//System.out.println("counter: " + counter);
 		while(counter > 0)
 		{
 			Random random5 = new Random();
@@ -351,17 +356,18 @@ public class ProbabilisticNetworkModeler {
 				affiliationDataBean.setEntitySource(new Integer(sourceNew));
 				affiliationDataBean.setEntityDestination(new Integer(destNew));
 				affiliationDataBean.setEntityWeight(1);
-			//	System.out.println("sourceNew, destNew: " + sourceNew + " " + destNew);
-			//	System.out.println("affiliationAliasNew " + affiliationAliasNew);
+				//System.out.println("sourceNew, destNew: " + sourceNew + " " + destNew);
+				//System.out.println("affiliationAliasNew " + affiliationAliasNew);
 				randomAffilations.add(affiliationDataBean);
 				affiliationAliases.add(affiliationAliasNew);
 				
-				counter = counter-1;
+				//counter = counter-1;
 			}
+			counter = counter-1;
 		}
 		
-	//	System.out.println("randomAffilations: " + randomAffilations);
-	//	System.out.println("randomAffilations.size(): " + randomAffilations.size());
+		//System.out.println("randomAffilations: " + randomAffilations);
+		//System.out.println("randomAffilations.size(): " + randomAffilations.size());
 		// End: Add random affiliations
 		
 		

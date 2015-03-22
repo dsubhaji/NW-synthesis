@@ -297,10 +297,12 @@ public class NetworkModelingController {
 			Vector<String> vertexIDs = bbm.generateVertices(height,branch);
 				
 			Vector<AffiliationDataBean> affiliations = bbm.generateAffiliations(levels, branch, height, p, peerLevel, q, randAffProb, vertexIDs);
-				
+			
+			//Added now for checking
+			System.out.println("Returning from Probabilistic Network Modeler\n");     
 				
 			String pajekFileName = pif.formatPajekInput(affiliations,vertexIDs, 0, "entity");
-			
+			System.out.println();
 			try
 			{
 				BufferedWriter out = new BufferedWriter(new FileWriter("Bridge_Building_Model_manual_output_v02.csv", true));
