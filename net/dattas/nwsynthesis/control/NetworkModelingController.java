@@ -294,7 +294,7 @@ public class NetworkModelingController {
 		}
 		
 		
-		System.out.println("Enter the steps");
+		System.out.println("Enter number of steps in increment between lower and upper limit");
 		step=choiceScanner.nextLine();
 		
 		// Start: Invoke modeler and print output
