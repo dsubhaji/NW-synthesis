@@ -29,6 +29,7 @@ public class NetworkModelingController {
 		int lower = 0;
 		int upper = 0;
 		int step_int=0;
+		int counter=0;
 		
 		double lowerd = 0.0;
 		double upperd = 0.0;
@@ -128,7 +129,7 @@ public class NetworkModelingController {
 				temp1 = l;
 				flag = 1;
 				temp = 1;       // 1 for branches
-				break;
+				//break;
 			case 2:
 				System.out.print("\nYou have selected Height\n");
 				do
@@ -149,7 +150,7 @@ public class NetworkModelingController {
 				temp2 = l;
 				flag = 1;
 				temp = 2;     // 2 for height
-				break;
+				//break;
 			case 3:
 				System.out.print("\nYou have selected Probability of affiliation\n");
 				do
@@ -170,7 +171,7 @@ public class NetworkModelingController {
 				temp3 = l;
 				flag = 1;
 				temp = 3;     // 3 for probability of affiliation
-				break;
+				//break;
 			case 4:
 				System.out.print("\nYou have selected Given Level\n");
 				do
@@ -191,7 +192,7 @@ public class NetworkModelingController {
 				temp4 = l;
 				flag = 1;
 				temp = 4;           // 4 for given level
-				break;
+				//break;
 			case 5:
 				System.out.print("\nYou have selected Probability of affiliation at a given level\n");
 				do
@@ -212,7 +213,7 @@ public class NetworkModelingController {
 				temp5 = l;
 				flag = 1;
 				temp = 5;        // 5 for prob of affiliation at a given level
-				break;
+				//break;
 			case 6:
 				System.out.print("\nYou have selected Random Affiliation\n");
 				do
@@ -232,8 +233,20 @@ public class NetworkModelingController {
 				temp6 = l;
 				flag = 1;
 				temp = 6;        // 6 for random affiliation
-				break;
+				//break;
 			default:
+				System.out.println("Enter the steps");
+				step=choiceScanner.nextLine();
+				
+				if(temp == 1 || temp == 2 || temp == 4)
+				{
+					step_int=((upper-lower)/new Double(step).intValue());
+				}
+				
+				if(temp == 3 || temp == 5 || temp == 6)
+				{
+					step_double=(((upperd-lowerd)/new Double(step)));
+				}
 				break;
 		}
 		
@@ -298,7 +311,7 @@ public class NetworkModelingController {
 			}while(randAffProb<0 || randAffProb >1);
 		}
 		
-		
+		/*
 		System.out.println("Enter the steps");
 		step=choiceScanner.nextLine();
 		
@@ -311,7 +324,7 @@ public class NetworkModelingController {
 		{
 			step_double=(((upperd-lowerd)/new Double(step)));
 		}
-		
+		*/
 		//step=(upper-lower)/20;
 		
 		// Start: Invoke modeler and print output
@@ -345,6 +358,10 @@ public class NetworkModelingController {
 			randAffProb = lowerd;
 			//System.out.println("Value before netowrk:" + lowerd);
 		}
+		
+		int ptr=new Integer(step).intValue();
+		System.out.println("ptr value="+ptr);
+		counter=0;
 		
 		while(lower <= upper && lowerd <= upperd)
 		{
@@ -388,17 +405,17 @@ public class NetworkModelingController {
 				/*if(temp == 1 || temp == 2 || temp == 4)
 				{
 							
-					
 					out.write(lower);
 				}
 				if(temp == 3 || temp == 5 || temp == 6)
 				{
-							
-					
+								
 					out.write(new Double(lowerd).toString());
 				}*/
-				out.write(step);
+				counter++;
 				
+				out.write(new Integer(counter).toString());
+						
 				out.write("\n");
 				out.close();
 			}
