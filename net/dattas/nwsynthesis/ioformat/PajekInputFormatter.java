@@ -1,5 +1,6 @@
 package net.dattas.nwsynthesis.ioformat;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
@@ -24,12 +25,17 @@ public class PajekInputFormatter {
 	    
 	    String timeStamp = sdf.format(cal.getTime());
 	    String outputFileName = "";
-		
+	    String dir="simulation-results";
+	    File directory = new File(dir);
+	    String dirName=directory.getAbsolutePath()+"\\";
+		boolean output_dir = directory.mkdir();
+				
 		try{
-			outputFileName = "NW_" + timeStamp + ".net";
-			out = new FileOutputStream(outputFileName);
+			outputFileName ="NW_" + timeStamp + ".net";
+			out = new FileOutputStream(dirName+outputFileName);
 			p = new PrintStream( out );
-
+			
+			
 			for(int y = 0; y < vertices.size(); y++)
 				{
 					mapping.put(vertices.elementAt(y),(new Integer(y+1)));
@@ -96,5 +102,6 @@ public class PajekInputFormatter {
 			e.printStackTrace();
 		}
 		return outputFileName;
+		
 	}
 }
