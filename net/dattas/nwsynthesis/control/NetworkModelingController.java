@@ -28,13 +28,15 @@ public class NetworkModelingController {
 		int choice = 0;
 		int lower = 0;
 		int upper = 0;
+		int step_int=0;
 		
 		double lowerd = 0.0;
 		double upperd = 0.0;
+		double step_double=0;
 		
 		int n = 0;
 		int flag = 0;
-		//double i = 0.0;
+		
 		int temp = 0;
 		int header=1;
 		
@@ -45,12 +47,14 @@ public class NetworkModelingController {
 		double q = 0.0; // probability of a link existing between peer nodes at given peerLevel
 		
 		double randAffProb = 0.0; // probability of random affiliations
+		
 		String temp1 = null;
 		String temp2 = null;
 		String temp3 = null;
 		String temp4 = null;
 		String temp5 = null;
 		String temp6 = null;
+		String step=null;
 		String l;
 		String u;
 		
@@ -79,10 +83,11 @@ public class NetworkModelingController {
 			out.write(",");
 			out.write("Vertex Count");
 			out.write(",");
-			out.write("Affilaction Count");
+			out.write("Affiliation Count");
 			out.write(",");
 			out.write("Networks");
-			
+			out.write(",");
+			out.write("steps");
 			out.write("\n");
 			header++;
 			}
@@ -288,40 +293,46 @@ public class NetworkModelingController {
 			}while(randAffProb<0 || randAffProb >1);
 		}
 		
+		
+		System.out.println("Enter the steps");
+		step=choiceScanner.nextLine();
+		
 		// Start: Invoke modeler and print output
+		if(temp == 1)
+		{
+			branch = lower;
+		//	System.out.println("Value before netowrk:" + lower);
+		}
+		if(temp == 2)
+		{
+			height = lower;
+			//System.out.println("Value before netowrk:" + lower);
+		}
+		if(temp == 3)
+		{
+			p = lowerd;
+			//System.out.println("Value before netowrk:" + lowerd);
+		}
+		if(temp == 4)
+		{
+			peerLevel = lower;
+			//System.out.println("Value before netowrk:" + lower);
+		}
+		if(temp == 5)
+		{
+			q = lowerd;
+			//System.out.println("Value before netowrk:" + lowerd);
+		}
+		if(temp == 6)
+		{
+			randAffProb = lowerd;
+			//System.out.println("Value before netowrk:" + lowerd);
+		}
+		
 		while(lower <= upper && lowerd <= upperd)
 		{
-			if(temp == 1)
-			{
-				branch = lower;
-			//	System.out.println("Value before netowrk:" + lower);
-			}
-			if(temp == 2)
-			{
-				height = lower;
-				//System.out.println("Value before netowrk:" + lower);
-			}
-			if(temp == 3)
-			{
-				p = lowerd;
-				//System.out.println("Value before netowrk:" + lowerd);
-			}
-			if(temp == 4)
-			{
-				peerLevel = lower;
-				//System.out.println("Value before netowrk:" + lower);
-			}
-			if(temp == 5)
-			{
-				q = lowerd;
-				//System.out.println("Value before netowrk:" + lowerd);
-			}
-			if(temp == 6)
-			{
-				randAffProb = lowerd;
-				//System.out.println("Value before netowrk:" + lowerd);
-			}
-				
+			
+			
 				
 				
 			ProbabilisticNetworkModeler bbm = new ProbabilisticNetworkModeler();
@@ -358,6 +369,8 @@ public class NetworkModelingController {
 				out.write((new Integer(affiliations.size())).toString());
 				out.write(",");
 				out.write(pajekFileName);
+				out.write(",");
+				out.write(step);
 				out.write("\n");
 				out.close();
 			}
@@ -368,13 +381,15 @@ public class NetworkModelingController {
 					
 			if(temp == 1 || temp == 2 || temp == 4)
 			{
-				lower++;
+				step_int=(new Integer(step)).intValue();
+				lower=lower+step_int;
 				//System.out.println("Value after netowrk:" + lower);
 			}
 			
 			if(temp == 3 || temp == 5 || temp == 6)
 			{
-				lowerd = lowerd + 0.05;
+				step_double=(new Double(step)).doubleValue();
+				lowerd = lowerd + step_double;
 				DecimalFormat df = new DecimalFormat("#.##");
 				String s = df.format(lowerd);
 				lowerd = (new Double(s)).doubleValue();
@@ -382,6 +397,30 @@ public class NetworkModelingController {
 				//System.out.println("Value after netowrk:" + lowerd);
 			}
 			
+			if(temp==1){
+				temp1=(new Integer(lower)).toString();
+				
+			}
+			if(temp==2){
+				temp2=(new Integer(lower)).toString();
+				
+			}
+			if(temp==4){
+				temp4=(new Integer(lower)).toString();
+				
+			}
+			if(temp==3){
+				temp3=(new Double(lowerd)).toString();
+				
+			}
+			if(temp==5){
+				temp5=(new Double(lowerd)).toString();
+				
+			}
+			if(temp==6){
+				temp6=(new Double(lowerd)).toString();
+				
+			}
 		}	// End: Invoke modeler and print output
 		
 			choiceScanner.close();
