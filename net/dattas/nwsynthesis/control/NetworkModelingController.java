@@ -129,7 +129,7 @@ public class NetworkModelingController {
 				temp1 = l;
 				flag = 1;
 				temp = 1;       // 1 for branches
-				//break;
+				break;
 			case 2:
 				System.out.print("\nYou have selected Height\n");
 				do
@@ -150,9 +150,9 @@ public class NetworkModelingController {
 				temp2 = l;
 				flag = 1;
 				temp = 2;     // 2 for height
-				//break;
+				break;
 			case 3:
-				System.out.print("\nYou have selected Probability of affiliation\n");
+				System.out.print("\nYou have selected Probability of affiliation of leaf nodes under same parent\n");
 				do
 				{
 					System.out.println("Enter lower limit:");
@@ -171,7 +171,7 @@ public class NetworkModelingController {
 				temp3 = l;
 				flag = 1;
 				temp = 3;     // 3 for probability of affiliation
-				//break;
+				break;
 			case 4:
 				System.out.print("\nYou have selected Given Level\n");
 				do
@@ -192,7 +192,7 @@ public class NetworkModelingController {
 				temp4 = l;
 				flag = 1;
 				temp = 4;           // 4 for given level
-				//break;
+				break;
 			case 5:
 				System.out.print("\nYou have selected Probability of affiliation at a given level\n");
 				do
@@ -213,7 +213,7 @@ public class NetworkModelingController {
 				temp5 = l;
 				flag = 1;
 				temp = 5;        // 5 for prob of affiliation at a given level
-				//break;
+				break;
 			case 6:
 				System.out.print("\nYou have selected Random Affiliation\n");
 				do
@@ -233,22 +233,23 @@ public class NetworkModelingController {
 				temp6 = l;
 				flag = 1;
 				temp = 6;        // 6 for random affiliation
-				//break;
+				break;
 			default:
-				System.out.println("Enter the steps");
-				step=choiceScanner.nextLine();
-				
-				if(temp == 1 || temp == 2 || temp == 4)
-				{
-					step_int=((upper-lower)/new Double(step).intValue());
-				}
-				
-				if(temp == 3 || temp == 5 || temp == 6)
-				{
-					step_double=(((upperd-lowerd)/new Double(step)));
-				}
 				break;
 		}
+		System.out.println("Enter the steps");
+		step=choiceScanner.nextLine();
+		
+		if(temp == 1 || temp == 2 || temp == 4)
+		{
+			step_int=((upper-lower)/new Double(step).intValue());
+		}
+		
+		if(temp == 3 || temp == 5 || temp == 6)
+		{
+			step_double=(((upperd-lowerd)/new Double(step)));
+		}
+		
 		
 		
 		if(temp != 1)
