@@ -36,6 +36,7 @@ public class NetworkModelingController {
 		int flag = 0;
 		//double i = 0.0;
 		int temp = 0;
+		int header=1;
 		
 		double p = 0.0; // probability of a link existing between the leaf nodes under a parent
 		
@@ -60,6 +61,40 @@ public class NetworkModelingController {
 		System.out.print("\n1.No of branches\n2.Height\n3.Probability of affiliation of leaf nodes under same parent\n4.Given level?\n5.Probability of affiliation at a given level\n6.Random affiliation probability\n");
 		String a = choiceScanner.nextLine();
 		choice = (new Integer(a)).intValue();
+		try
+		{
+			BufferedWriter out = new BufferedWriter(new FileWriter("Bridge_Building_Model_manual_output_v02.csv", true));
+			if(header==1){
+			out.write("branch");
+			out.write(",");
+			out.write("height");
+			out.write(",");
+			out.write("Probability of affiliation of leaf nodes under same parent");
+			out.write(",");
+			out.write("Given level");
+			out.write(",");
+			out.write("Probability of affiliation at a given level");
+			out.write(",");
+			out.write("Random affiliation probability");
+			out.write(",");
+			out.write("Vertex Count");
+			out.write(",");
+			out.write("Affilaction Count");
+			out.write(",");
+			out.write("Networks");
+			
+			out.write("\n");
+			header++;
+			}
+			
+			
+			out.close();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}	
+				
 		
 		switch(choice)
 		{	
@@ -306,7 +341,6 @@ public class NetworkModelingController {
 			try
 			{
 				BufferedWriter out = new BufferedWriter(new FileWriter("Bridge_Building_Model_manual_output_v02.csv", true));
-				
 				out.write(temp1);
 				out.write(",");
 				out.write(temp2);
