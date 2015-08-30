@@ -57,7 +57,7 @@ public class NetworkModelingController {
 		String step=null;
 		String l;
 		String u;
-		
+		String dir="simulation-results";
 		Scanner choiceScanner = new Scanner(System.in);
 		
 		
@@ -65,9 +65,14 @@ public class NetworkModelingController {
 		System.out.print("\n1.No of branches\n2.Height\n3.Probability of affiliation of leaf nodes under same parent\n4.Given level?\n5.Probability of affiliation at a given level\n6.Random affiliation probability\n");
 		String a = choiceScanner.nextLine();
 		choice = (new Integer(a)).intValue();
+		
+		File directory = new File(dir);
+		String dirName=directory.getAbsolutePath()+"\\";
+		System.out.println("dirName="+dirName);
+		boolean output_dir = directory.mkdir(); 
 		try
 		{
-			BufferedWriter out = new BufferedWriter(new FileWriter("Bridge_Building_Model_manual_output_v02.csv", true));
+			BufferedWriter out = new BufferedWriter(new FileWriter(dirName+"Bridge_Building_Model_manual_output_v02.csv", true));
 			if(header==1){
 			out.write("branch");
 			out.write(",");
@@ -83,7 +88,7 @@ public class NetworkModelingController {
 			out.write(",");
 			out.write("Vertex Count");
 			out.write(",");
-			out.write("Affiliation Count");
+			out.write("Affilaction Count");
 			out.write(",");
 			out.write("Networks");
 			out.write(",");
@@ -294,8 +299,20 @@ public class NetworkModelingController {
 		}
 		
 		
-		System.out.println("Enter number of steps in increment between lower and upper limit");
+		System.out.println("Enter the steps");
 		step=choiceScanner.nextLine();
+		
+		if(temp == 1 || temp == 2 || temp == 4)
+		{
+			step_int=((upper-lower)/new Double(step).intValue());
+		}
+		
+		if(temp == 3 || temp == 5 || temp == 6)
+		{
+			step_double=(((upperd-lowerd)/new Double(step)));
+		}
+		
+		//step=(upper-lower)/20;
 		
 		// Start: Invoke modeler and print output
 		if(temp == 1)
@@ -332,8 +349,6 @@ public class NetworkModelingController {
 		while(lower <= upper && lowerd <= upperd)
 		{
 			
-			
-				
 				
 			ProbabilisticNetworkModeler bbm = new ProbabilisticNetworkModeler();
 			PajekInputFormatter pif = new PajekInputFormatter();
@@ -351,7 +366,7 @@ public class NetworkModelingController {
 			System.out.println();
 			try
 			{
-				BufferedWriter out = new BufferedWriter(new FileWriter("Bridge_Building_Model_manual_output_v02.csv", true));
+				BufferedWriter out = new BufferedWriter(new FileWriter(dirName+"Bridge_Building_Model_manual_output_v02.csv", true));
 				out.write(temp1);
 				out.write(",");
 				out.write(temp2);
@@ -370,7 +385,20 @@ public class NetworkModelingController {
 				out.write(",");
 				out.write(pajekFileName);
 				out.write(",");
+				/*if(temp == 1 || temp == 2 || temp == 4)
+				{
+							
+					
+					out.write(lower);
+				}
+				if(temp == 3 || temp == 5 || temp == 6)
+				{
+							
+					
+					out.write(new Double(lowerd).toString());
+				}*/
 				out.write(step);
+				
 				out.write("\n");
 				out.close();
 			}
@@ -381,14 +409,15 @@ public class NetworkModelingController {
 					
 			if(temp == 1 || temp == 2 || temp == 4)
 			{
-				step_int=(new Integer(step)).intValue();
+				//step_int=(new Integer(step)).intValue();
+			
 				lower=lower+step_int;
 				//System.out.println("Value after netowrk:" + lower);
 			}
 			
 			if(temp == 3 || temp == 5 || temp == 6)
 			{
-				step_double=(new Double(step)).doubleValue();
+				//step_double=(new Double(step)).doubleValue();
 				lowerd = lowerd + step_double;
 				DecimalFormat df = new DecimalFormat("#.##");
 				String s = df.format(lowerd);
