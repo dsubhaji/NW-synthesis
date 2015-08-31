@@ -16,24 +16,9 @@ public class NetworkModelingController {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		manualRun();
-		
-	}
-	public static File dir(){
-		
-		Calendar cal = Calendar.getInstance();
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_hhmmssSSSSSS_a");
-	    
-	    String timeStamp = sdf.format(cal.getTime());
-	    String dir=timeStamp+"-simulation-results";
-	    File directory=new File(dir);
-		return directory;
-	}
 	
-	public static void manualRun()
+	
+	public static void manualRun(String timestamp)
 	{
 		int branch = 0; // branch of tree
 		int height = 0; // height of tree
@@ -84,10 +69,10 @@ public class NetworkModelingController {
 		System.out.print("\n1.No of branches\n2.Height\n3.Probability of affiliation of leaf nodes under same parent\n4.Given level?\n5.Probability of affiliation at a given level\n6.Random affiliation probability\n");
 		String a = choiceScanner.nextLine();
 		choice = (new Integer(a)).intValue();
-		//String dir=dir();
-		File directory = dir();
+		String dir=timestamp+"-run-summary";
+		File directory = new File(dir);
 		String dirName=directory.getAbsolutePath()+"\\";
-		System.out.println("dirName="+dirName);
+	//	System.out.println("dirName="+dirName);
 		boolean output_dir = directory.mkdir(); 
 		
 		try
@@ -365,12 +350,12 @@ public class NetworkModelingController {
 		}
 		
 		int ptr=new Integer(step).intValue();
-		System.out.println("ptr value="+ptr);
+		
 		counter=0;
 		
 		ProbabilisticNetworkModeler bbm = new ProbabilisticNetworkModeler();
 		
-		PajekInputFormatter pif = new PajekInputFormatter();
+		PajekInputFormatter pif = new PajekInputFormatter(timestamp);
 		
 		while(lower <= upper && lowerd <= upperd)
 		{
@@ -422,7 +407,7 @@ public class NetworkModelingController {
 				
 			String pajekFileName = pif.formatPajekInput(affiliations,vertexIDs, 0, "entity");
 
-			System.out.println(affiliations);
+		//	System.out.println(affiliations);
 			System.out.println();
 			try
 			{
@@ -503,6 +488,6 @@ public class NetworkModelingController {
 		}	// End: Invoke modeler and print output
 		
 			choiceScanner.close();
-
+			System.out.println("END...!!");
 	}
 }
