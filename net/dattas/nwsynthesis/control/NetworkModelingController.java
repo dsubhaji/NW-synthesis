@@ -380,12 +380,49 @@ public class NetworkModelingController {
 			Vector<String> vertexIDs = bbm.generateVertices(height,branch);
 				
 			Vector<AffiliationDataBean> affiliations = bbm.generateAffiliations(levels, branch, height, p, peerLevel, q, randAffProb, vertexIDs);
-			
-			//Added now for checking
+			if(temp == 1)
+			{
+				branch = lower+step_int;
+		
+			}
+			if(temp == 2)
+			{
+				height = lower+step_int;
+
+			}
+			if(temp == 3)
+			{
+				p = lowerd+step_double;
+				
+			}
+			if(temp == 4)
+			{
+				peerLevel = lower+step_int;
+				
+			}
+			if(temp == 5)
+			{
+				q = lowerd+step_double;
+				
+			}
+			if(temp == 6)
+			{
+				randAffProb = lowerd+step_double;
+				
+			}
+
+		/*	System.out.println("Value of levels"+levels);
+			System.out.println("Value of branch"+branch);
+			System.out.println("Value of height"+height);
+			System.out.println("Value of peerLevel"+peerLevel);
+			System.out.println("Value of q"+q);
+			System.out.println("Value of randAff"+randAffProb);
+			//Added now for checking*/
 			System.out.println("Returning from Probabilistic Network Modeler\n");     
 				
 			String pajekFileName = pif.formatPajekInput(affiliations,vertexIDs, 0, "entity");
-			
+
+			System.out.println(affiliations);
 			System.out.println();
 			try
 			{
