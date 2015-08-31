@@ -8,10 +8,15 @@ import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import net.dattas.nwsynthesis.control.NetworkModelingController;
 import net.dattas.nwsynthesis.databean.AffiliationDataBean;
 
 public class PajekInputFormatter {
 
+	File directory =NetworkModelingController.dir();
+    String dirName=directory.getAbsolutePath()+"\\";
+	boolean output_dir = directory.mkdir();
+	
 	
 	public String formatPajekInput(Vector<AffiliationDataBean> affiliationDataBeans, Vector<String> vertices, int linkWeightThreshold, String affiliationType)
 	{
@@ -25,11 +30,9 @@ public class PajekInputFormatter {
 	    
 	    String timeStamp = sdf.format(cal.getTime());
 	    String outputFileName = "";
-	    String dir="simulation-results";
-	    File directory = new File(dir);
-	    String dirName=directory.getAbsolutePath()+"\\";
-		boolean output_dir = directory.mkdir();
-				
+	    
+	    
+	    		
 		try{
 			outputFileName ="NW_" + timeStamp + ".net";
 			out = new FileOutputStream(dirName+outputFileName);
