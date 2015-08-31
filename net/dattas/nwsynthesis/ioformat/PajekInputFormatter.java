@@ -13,10 +13,13 @@ import net.dattas.nwsynthesis.databean.AffiliationDataBean;
 
 public class PajekInputFormatter {
 
-	File directory =NetworkModelingController.dir();
-    String dirName=directory.getAbsolutePath()+"\\";
-	boolean output_dir = directory.mkdir();
-	
+	public String time_folder; 
+	public PajekInputFormatter(){
+		
+	}
+	public PajekInputFormatter(String t) {
+		this.time_folder=t;
+	}
 	
 	public String formatPajekInput(Vector<AffiliationDataBean> affiliationDataBeans, Vector<String> vertices, int linkWeightThreshold, String affiliationType)
 	{
@@ -28,19 +31,23 @@ public class PajekInputFormatter {
 		Calendar cal = Calendar.getInstance();
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_hhmmssSSSSSS_a");
 	    
-	    String timeStamp = sdf.format(cal.getTime());
+	    String timestamp = sdf.format(cal.getTime());
 	    String outputFileName = "";
 	    
-	    
+	    String dir=time_folder+"-nw-files";
+		File directory = new File(dir);
+		boolean output_dir = directory.mkdir();
+		String dirName=directory.getAbsolutePath()+"\\";
 	    		
 		try{
-			outputFileName ="NW_" + timeStamp + ".net";
+			outputFileName ="NW_" + timestamp + ".net";
+			
 			out = new FileOutputStream(dirName+outputFileName);
-			p = new PrintStream( out );
+			p = new PrintStream(out);
 			
 			
 			for(int y = 0; y < vertices.size(); y++)
-				{
+			{
 					mapping.put(vertices.elementAt(y),(new Integer(y+1)));
 			
 				}
@@ -48,7 +55,7 @@ public class PajekInputFormatter {
 		
 			//System.out.println("*Vertices" + " " + mapping.size());
 			 p.println ("*Vertices" + " " + mapping.size());
-			System.out.println("There are " + mapping.size() + " vertices");
+			//System.out.println("There are " + mapping.size() + " vertices");
 			for(int y = 0; y < vertices.size(); y++)
 				{
 			
@@ -56,7 +63,7 @@ public class PajekInputFormatter {
 				 	p.println (y+1 + " " + "\"" + vertices.elementAt(y) + "\"");
 				}
 			
-			p.println("*Edges");
+			 p.println("*Edges");
 			//System.out.println("*Edges");
 			int edgeCount = 0;
 			
@@ -95,8 +102,8 @@ public class PajekInputFormatter {
 					}
 				}
 			//System.out.println("linkWeightThreshold = " + linkWeightThreshold);
-			System.out.println("There are " + edgeCount + " edges");
-			System.out.println("See results in the file: " + outputFileName);
+			//System.out.println("There are " + edgeCount + " edges");
+			//System.out.println("See results in the file: " + outputFileName);
 			
 			
 		}
@@ -104,6 +111,7 @@ public class PajekInputFormatter {
 		{
 			e.printStackTrace();
 		}
+		
 		return outputFileName;
 		
 	}
