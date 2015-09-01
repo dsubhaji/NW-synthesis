@@ -63,17 +63,26 @@ public class NetworkModelingController {
 	    String dir=timeStamp+"-simulation-results";*/
 	    
 		Scanner choiceScanner = new Scanner(System.in);
-		
-		
-		System.out.print("Select the parameter which you want to vary over a range of values:");
-		System.out.print("\n1.No of branches\n2.Height\n3.Probability of affiliation of leaf nodes under same parent\n4.Given level?\n5.Probability of affiliation at a given level\n6.Random affiliation probability\n");
-		String a = choiceScanner.nextLine();
-		choice = (new Integer(a)).intValue();
 		String dir=timestamp+"-run-summary";
 		File directory = new File(dir);
 		String dirName=directory.getAbsolutePath()+"\\";
 	//	System.out.println("dirName="+dirName);
 		boolean output_dir = directory.mkdir(); 
+		
+		System.out.println("Do you want to have probability of affiliation at given level cascade to lower levels? (Say Y or N)");
+		String x=choiceScanner.nextLine();
+		
+		
+		if(x.equalsIgnoreCase("Y")||x.equalsIgnoreCase("N")){
+			
+		
+		System.out.print("Select the parameter which you want to vary over a range of values:");
+		
+		System.out.print("\n1.No of branches\n2.Height\n3.Probability of affiliation of leaf nodes under same parent\n4.Given level?\n5.Probability of affiliation at a given level\n6.Random affiliation probability\n");
+		String a = choiceScanner.nextLine();
+		choice = (new Integer(a)).intValue();
+		
+		
 		
 		try
 		{
@@ -316,7 +325,7 @@ public class NetworkModelingController {
 			}while(randAffProb<0 || randAffProb >1);
 		}
 		
-		
+	}
 		// Start: Invoke modeler and print output
 		if(temp == 1)
 		{
@@ -349,7 +358,7 @@ public class NetworkModelingController {
 			
 		}
 		
-		int ptr=new Integer(step).intValue();
+		//int ptr=new Integer(step).intValue();
 		
 		counter=0;
 		
@@ -357,6 +366,7 @@ public class NetworkModelingController {
 		
 		PajekInputFormatter pif = new PajekInputFormatter(timestamp);
 		
+		Vector<AffiliationDataBean> affiliations=null;
 		while(lower <= upper && lowerd <= upperd)
 		{
 						
@@ -364,7 +374,14 @@ public class NetworkModelingController {
 			
 			Vector<String> vertexIDs = bbm.generateVertices(height,branch);
 				
-			Vector<AffiliationDataBean> affiliations = bbm.generateAffiliations(levels, branch, height, p, peerLevel, q, randAffProb, vertexIDs);
+			if(x.equalsIgnoreCase("N")){
+				
+			 affiliations = bbm.generateAffiliations(levels, branch, height, p, peerLevel, q, randAffProb, vertexIDs);
+			}
+			if(x.equalsIgnoreCase("Y")){
+				
+				 affiliations = bbm.generateAffiliations_level(levels, branch, height, p, peerLevel, q, randAffProb, vertexIDs);
+			}
 			if(temp == 1)
 			{
 				branch = lower+step_int;
