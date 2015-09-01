@@ -326,6 +326,11 @@ public class NetworkModelingController {
 		}
 		
 	}
+		else
+		{
+			System.out.println("Please enter it Correctly and re run");
+			return ;
+		}
 		// Start: Invoke modeler and print output
 		if(temp == 1)
 		{
