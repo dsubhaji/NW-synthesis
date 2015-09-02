@@ -558,7 +558,7 @@ public class ProbabilisticNetworkModeler {
 			prob=q/++count;
 			//System.out.println("After Value of q"+prob);
 			///System.out.println("Peerlevel value"+peerLevel);
-			System.out.println("Values of Count"+count);
+			//System.out.println("Values of Count"+count);
 			//System.out.println("Max no of links betn vertices at same level: " + maxNoOfLinksBetnVerticesAtThisLevel);
 			//System.out.println("Actual no of links betn vertices at same level: " + actualNoOfLinksBetnVerticesAtThisLevel);
 			
