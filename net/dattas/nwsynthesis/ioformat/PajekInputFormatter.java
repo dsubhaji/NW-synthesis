@@ -55,7 +55,7 @@ public class PajekInputFormatter {
 		
 			//System.out.println("*Vertices" + " " + mapping.size());
 			 p.println ("*Vertices" + " " + mapping.size());
-			//System.out.println("There are " + mapping.size() + " vertices");
+			System.out.println("There are " + mapping.size() + " vertices");
 			for(int y = 0; y < vertices.size(); y++)
 				{
 			
@@ -102,8 +102,8 @@ public class PajekInputFormatter {
 					}
 				}
 			//System.out.println("linkWeightThreshold = " + linkWeightThreshold);
-			//System.out.println("There are " + edgeCount + " edges");
-			//System.out.println("See results in the file: " + outputFileName);
+			System.out.println("There are " + edgeCount + " edges");
+			System.out.println("See results in the file: " + outputFileName);
 			
 			
 		}
