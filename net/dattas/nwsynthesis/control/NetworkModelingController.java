@@ -425,7 +425,7 @@ public class NetworkModelingController {
 			System.out.println("Value of q"+q);
 			System.out.println("Value of randAff"+randAffProb);
 			//Added now for checking*/
-			System.out.println("Returning from Probabilistic Network Modeler\n");     
+			//System.out.println("Returning from Probabilistic Network Modeler\n");     
 				
 			String pajekFileName = pif.formatPajekInput(affiliations,vertexIDs, 0, "entity");
 
