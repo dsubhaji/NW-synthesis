@@ -1,15 +1,15 @@
 package net.dattas.nwsynthesis.control;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Scanner;
-import java.util.Vector;
+import java.util.*;
 import java.io.*;
 import java.math.*;
+import java.lang.*;
 
 import net.dattas.nwsynthesis.databean.AffiliationDataBean;
 import net.dattas.nwsynthesis.ioformat.*;
 import net.dattas.nwsynthesis.util.*;
+import net.dattas.nwsynthesis.ds.Btree;
 
 public class NetworkModelingController {
 
@@ -368,6 +368,7 @@ public class NetworkModelingController {
 		counter=0;
 		
 		ProbabilisticNetworkModeler bbm = new ProbabilisticNetworkModeler();
+		Btree tree;
 		
 		PajekInputFormatter pif = new PajekInputFormatter(timestamp);
 		
@@ -375,17 +376,19 @@ public class NetworkModelingController {
 		while(lower <= upper && lowerd <= upperd)
 		{
 						
-			Vector<Vector<Integer>> levels = bbm.generateLevels(height, branch);
+			//Vector<Vector<Integer>> levels = bbm.generateLevels(height, branch);
 			
-			Vector<String> vertexIDs = bbm.generateVertices(height,branch);
+			//Vector<String> vertexIDs = bbm.generateVertices(height,branch);
 				
+			tree = new Btree(height,branch);
+			
 			if(x.equalsIgnoreCase("N")){
 				
-			 affiliations = bbm.generateAffiliations(levels, branch, height, p, peerLevel, q, randAffProb, vertexIDs);
+			 affiliations = bbm.generateAffiliations(p, peerLevel, q, randAffProb, tree);
 			}
 			if(x.equalsIgnoreCase("Y")){
 				
-				 affiliations = bbm.generateAffiliations_level(levels, branch, height, p, peerLevel, q, randAffProb, vertexIDs);
+			 affiliations = bbm.generateAffiliations_levels(p, peerLevel, q, randAffProb, tree);
 			}
 			if(temp == 1)
 			{
@@ -426,7 +429,15 @@ public class NetworkModelingController {
 			System.out.println("Value of randAff"+randAffProb);
 			//Added now for checking*/
 			//System.out.println("Returning from Probabilistic Network Modeler\n");     
-				
+			Vector<Integer> vertexKeys = new Vector<Integer>();
+			tree.getNodeKeys(tree.root,vertexKeys);
+			Vector<String> vertexIDs = new Vector<String>();
+			Iterator<Integer> y = vertexKeys.iterator();
+			while(y.hasNext())
+			{
+				vertexIDs.add(y.next().toString());
+			}
+			
 			String pajekFileName = pif.formatPajekInput(affiliations,vertexIDs, 0, "entity");
 
 		//	System.out.println(affiliations);
