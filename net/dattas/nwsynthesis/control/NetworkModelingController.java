@@ -375,10 +375,6 @@ public class NetworkModelingController {
 		Vector<AffiliationDataBean> affiliations=null;
 		while(lower <= upper && lowerd <= upperd)
 		{
-						
-			//Vector<Vector<Integer>> levels = bbm.generateLevels(height, branch);
-			
-			//Vector<String> vertexIDs = bbm.generateVertices(height,branch);
 				
 			tree = new Btree(height,branch);
 			
@@ -428,7 +424,9 @@ public class NetworkModelingController {
 			System.out.println("Value of q"+q);
 			System.out.println("Value of randAff"+randAffProb);
 			//Added now for checking*/
-			//System.out.println("Returning from Probabilistic Network Modeler\n");     
+			//System.out.println("Returning from Probabilistic Network Modeler\n");   
+
+			//creating a vector of node keys(string-type)  
 			Vector<Integer> vertexKeys = new Vector<Integer>();
 			tree.getNodeKeys(tree.root,vertexKeys);
 			Vector<String> vertexIDs = new Vector<String>();
