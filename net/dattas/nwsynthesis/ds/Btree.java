@@ -5,21 +5,7 @@ import java.util.Scanner;
 import java.util.Random;
 import java.util.*;
 
-class Node{
-	
-	int level;
-	int key;
-	Vector<Node> child;
 
-	Node(int level,int branch,int key){
-		
-			this.level=level;
-			this.key=key;
-			child = new Vector<Node>(branch);
-			for(int i=0;i<branch;i++)
-				child.add(i,null);
-}
-}
 public class Btree{
 	
 	public Node root;

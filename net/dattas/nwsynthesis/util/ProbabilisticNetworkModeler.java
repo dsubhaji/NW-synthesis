@@ -5,8 +5,7 @@ import java.util.Vector;
 import java.lang.*;
 
 import net.dattas.nwsynthesis.databean.*;
-import net.dattas.nwsynthesis.ds.Btree;
-import net.dattas.nwsynthesis.ds.Btree;
+import net.dattas.nwsynthesis.ds.*;
 
 public class ProbabilisticNetworkModeler {
 
@@ -36,12 +35,12 @@ public class ProbabilisticNetworkModeler {
 		
 	}
 	//record all general affiliations and also the leafs
-	private void traverse(Node focusNode, Vector<AffiliationDataBean> affiliations, Hashtable<Integer, Vector<Integer>> parentLeavesSet, int branch)
+	private void traverse(Node focusNode, Vector<AffiliationDataBean> affiliations, Hashtable<Integer, Vector<Integer>> parentLeavesSet, Btree tree)
 	{	 
-		if(!(isALeaf(focusNode))){
+		if(!(tree.isALeaf(focusNode))){
 	
 					Vector<Integer> leavesUnderSameParent = new Vector<Integer>();
-					for(int i=0;i<branch;i++)
+					for(int i=0;i<tree.branch;i++)
 					{
 						
 							AffiliationDataBean affiliationDataBean = new AffiliationDataBean();
@@ -49,14 +48,14 @@ public class ProbabilisticNetworkModeler {
 							affiliationDataBean.setEntityDestination(focusNode.child.elementAt(i).key);	
 							affiliationDataBean.setEntityWeight(1);
 							affiliations.add(affiliationDataBean);
-							if(isALeaf(focusNode.chhild.elementAt(i))){
-										leavesUnderSameParent.add(focusNode.elementAt(i).key);			
+							if(tree.isALeaf(focusNode.child.elementAt(i))){
+										leavesUnderSameParent.add(focusNode.child.elementAt(i).key);			
 					}
 					}
 					parentLeavesSet.put(focusNode.key,leavesUnderSameParent);
-					for(int i=0;i<branch;i++)
+					for(int i=0;i<tree.branch;i++)
 					{ 					
-							traverse(focusNode.elementAt(i), affiliations, parentLeavesSet, branch);			
+							traverse(focusNode.child.elementAt(i), affiliations, parentLeavesSet, tree);			
 					}
 
 		}
@@ -68,7 +67,7 @@ public class ProbabilisticNetworkModeler {
 		
 		Hashtable<Integer,Vector<Integer>> parentLeavesSet = new Hashtable<Integer,Vector<Integer>>();	
 		
-		traverse(tree.root,affiliations,parentLeavesSet,tree.branch);
+		traverse(tree.root,affiliations,parentLeavesSet,tree);
 		
 		Vector<AffiliationDataBean> leafAffiliations = new Vector<AffiliationDataBean>();
 		
@@ -243,7 +242,7 @@ public class ProbabilisticNetworkModeler {
 		
 		Hashtable<Integer,Vector<Integer>> parentLeavesSet = new Hashtable<Integer,Vector<Integer>>();	
 		
-		traverse(tree.root,affiliations,parentLeavesSet,tree.branch);
+		traverse(tree.root,affiliations,parentLeavesSet,tree);
 		
 		Vector<AffiliationDataBean> leafAffiliations = new Vector<AffiliationDataBean>();
 		

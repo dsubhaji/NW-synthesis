@@ -9,7 +9,7 @@ import java.lang.*;
 import net.dattas.nwsynthesis.databean.AffiliationDataBean;
 import net.dattas.nwsynthesis.ioformat.*;
 import net.dattas.nwsynthesis.util.*;
-import net.dattas.nwsynthesis.ds.Btree;
+import net.dattas.nwsynthesis.ds.*;
 
 public class NetworkModelingController {
 
