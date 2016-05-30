@@ -1,0 +1,7 @@
+branch,height,Probability of affiliation of leaf nodes under same parent,Given level,Probability of affiliation at a given level,Random affiliation probability,Vertex Count,Affilaction Count,Networks,steps
+3,2,0.5,1,0.5,0.1,13,20,NW_20151119_044358000738_PM.net,1
+3,2,0.5,1,0.5,0.18,13,21,NW_20151119_044358000746_PM.net,2
+3,2,0.5,1,0.5,0.26,13,23,NW_20151119_044358000754_PM.net,3
+3,2,0.5,1,0.5,0.34,13,24,NW_20151119_044358000782_PM.net,4
+3,2,0.5,1,0.5,0.42,13,26,NW_20151119_044358000810_PM.net,5
+3,2,0.5,1,0.5,0.5,13,27,NW_20151119_044358000818_PM.net,6
